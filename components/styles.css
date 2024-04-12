@@ -1,0 +1,66 @@
+/* Default styles */
+.slash-menu {
+    z-index: 9999;
+    background-color: white;
+    color: black;
+    /* Default text color */
+    border: 1px solid lightgray;
+    border-radius: 2px;
+    box-shadow: 0 0 8px #dddddd;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 8px;
+    top: 8px;
+}
+
+.slash-menu-item {
+    background-color: white;
+    color: black;
+    /* Default text color */
+    border: 1px solid lightgray;
+    border-radius: 2px;
+    box-shadow: 0 0 4px #dddddd;
+    cursor: pointer;
+    font-size: 16px;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    padding: 8px;
+}
+
+.slash-menu-item:hover,
+.slash-menu-item.selected {
+    background-color: lightgray;
+}
+
+/* Dark mode styles */
+.slash-menu.dark-background {
+    background-color: #333;
+    color: white;
+    /* Text color for dark background */
+}
+
+/* Light mode styles */
+.slash-menu.light-background {
+    background-color: white;
+    color: black;
+    /* Text color for light background */
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+    .slash-menu {
+        padding: 4px;
+        /* Adjust padding for smaller screens */
+        font-size: 14px;
+        /* Adjust font size for smaller screens */
+    }
+
+    .slash-menu-item {
+        padding: 4px;
+        /* Adjust padding for smaller screens */
+        font-size: 14px;
+        /* Adjust font size for smaller screens */
+    }
+}
