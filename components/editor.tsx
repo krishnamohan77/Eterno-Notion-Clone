@@ -1,26 +1,19 @@
-import "@blocknote/core/fonts/inter.css";
-import {
-  BlockNoteView,
-  DefaultReactSuggestionItem,
-  SuggestionMenuController,
-  SuggestionMenuProps,
-  useCreateBlockNote,
-} from "@blocknote/react";
-import "@blocknote/react/style.css";
+
+"use client";
 
 import { useTheme } from "next-themes";
 import {
   BlockNoteEditor,
   PartialBlock
 } from "@blocknote/core";
-
+import {
+  BlockNoteView,
+  useCreateBlockNote
+} from "@blocknote/react";
 import "@blocknote/core/style.css";
 
 import { useEdgeStore } from "@/lib/edgestore";
 
-import "./styles.css";
-
-// Custom component to replace the default Slash Menu.
 interface EditorProps {
   onChange: (value: string) => void;
   initialContent?: string;
@@ -28,9 +21,7 @@ interface EditorProps {
 };
 
 const Editor = ({
-  onChange,
   initialContent,
-  editable
 }: EditorProps) => {
   const { resolvedTheme } = useTheme();
   const { edgestore } = useEdgeStore();
