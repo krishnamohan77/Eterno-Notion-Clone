@@ -8,58 +8,58 @@ import {
 } from "@blocknote/react";
 import "@blocknote/react/style.css";
 
+import { useTheme } from "next-themes";
+import {
+  BlockNoteEditor,
+  PartialBlock
+} from "@blocknote/core";
+
+import "@blocknote/core/style.css";
+
+import { useEdgeStore } from "@/lib/edgestore";
+
 import "./styles.css";
 
 // Custom component to replace the default Slash Menu.
-function CustomSlashMenu(
-  props: SuggestionMenuProps<DefaultReactSuggestionItem>
-) {
-  return (
-    <div className={"slash-menu"}>
-      {props.items.map((item, index) => (
-        <div
-          key={index} // Add key prop here
-          className={`slash-menu-item${props.selectedIndex === index ? " selected" : ""
-            }`}
-          onClick={() => {
-            props.onItemClick?.(item);
-          }}>
-          {item.title}
-        </div>
-      ))}
-    </div>
-  );
-}
+interface EditorProps {
+  onChange: (value: string) => void;
+  initialContent?: string;
+  editable?: boolean;
+};
 
-export default function App() {
-  // Creates a new editor instance.
-  const editor = useCreateBlockNote({
-    initialContent: [
-      {
-        type: "paragraph",
-        content: "",
-      },
-      {
-        type: "paragraph",
-        content: "",
-      },
-      {
-        type: "paragraph",
-        content: "",
-      },
-      {
-        type: "paragraph",
-      },
-    ],
-  });
+const Editor = ({
+  onChange,
+  initialContent,
+  editable
+}: EditorProps) => {
+  const { resolvedTheme } = useTheme();
+  const { edgestore } = useEdgeStore();
 
-  // Renders the editor instance.
+  const handleUpload = async (file: File) => {
+    const response = await edgestore.publicFiles.upload({
+      file
+    });
+
+    return response.url;
+  }
+
+  const editor: BlockNoteEditor = useCreateBlockNote({
+
+    initialContent:
+      initialContent
+        ? JSON.parse(initialContent) as PartialBlock[]
+        : undefined,
+    uploadFile: handleUpload
+  })
+
   return (
-    <BlockNoteView editor={editor} slashMenu={false}>
-      <SuggestionMenuController
-        triggerCharacter={"/"}
-        suggestionMenuComponent={CustomSlashMenu}
+    <div>
+      <BlockNoteView
+        editor={editor}
+        theme={resolvedTheme === "dark" ? "dark" : "light"}
       />
-    </BlockNoteView>
-  );
+    </div>
+  )
 }
+
+export default Editor;

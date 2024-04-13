@@ -16,13 +16,6 @@ interface DocumentIdPageProps {
   };
 };
 
-interface PageProps {
-  document: {
-    content: string;
-  };
-  onChange: (content: string) => void; // Define the onChange function
-}
-
 const DocumentIdPage = ({
   params
 }: DocumentIdPageProps) => {
@@ -34,6 +27,12 @@ const DocumentIdPage = ({
 
   const update = useMutation(api.documents.update);
 
+  const onChange = (content: string) => {
+    update({
+      id: params.documentId,
+      content
+    });
+  };
 
   if (document === undefined) {
     return (
